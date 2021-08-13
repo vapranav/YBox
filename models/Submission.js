@@ -14,9 +14,3 @@ const submissionSchema = new Schema({
 });
 
 module.exports = mongoose.model("Submission", submissionSchema);
-
-// - _id – MongoDB ID
-// - image – Image URL as String
-// - author – UserID For User Collection
-// - competition – CompetitionID For Competition Collection to denote which competition it
-// belonged
