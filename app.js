@@ -5,8 +5,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
+const utils = require("./utilities/populateDatabase");
 
 //Import models
 
@@ -16,7 +18,6 @@ var Submission = require("./models/Submission");
 var SubmissionLike = require("./models/SubmissionLike");
 
 //Connect to DB
-const mongoose = require("mongoose");
 mongoose.connect(
   "mongodb+srv://" +
     process.env.DB_USER +
@@ -39,52 +40,14 @@ db.once("open", function () {
   console.log("we're connected!");
 });
 
-/**** UTILITY FUNCTIONS ******/
+/**** UTILS ****/
 
-/* Function to populate 10 submissions into 5 competitions.
+// utils.createUser();
+// utils.createCompetition();
+// utils.createSubmissions();
+// utils.createLikes();
 
-async function createSubmissions() {
-  let competitions = await Competition.find({}).lean();
-  competitions.forEach(async (competition) => {
-    for (let i = 0; i < 10; i++) {
-      await Submission.create(
-        {
-          image:
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Football_iu_1996.jpg/1200px-Football_iu_1996.jpg",
-          author: "611657d635b39f16c017ce39",
-          competition: competition._id,
-        },
-        function (err, small) {
-          if (err) return handleError(err);
-        }
-      );
-    }
-  });
-
-  console.log(competitions);
-}
-createSubmissions();
-*/
-
-/* Function to create likes for random submissions.
-
-async function createLikes() {
-  let submissions = await Submission.find({}).lean();
-  for (let i = 0; i < 50; i++) {
-    let randomIndex = Math.floor(Math.random() * 51);
-    SubmissionLike.create(
-      {
-        author: "6115fd30e30f873b0044941a",
-        submission: submissions[randomIndex]._id,
-      },
-      function (err, small) {
-        if (err) return handleError(err);
-      }
-    );
-  }
-}
-createLikes();
-*/
+/**************/
 
 /***** ROUTES *****/
 
@@ -114,6 +77,7 @@ app.get("/competition", async (req, res) => {
         result.push(competition);
       })
     );
+    console.log(result);
     res.send(result);
   } catch (err) {
     console.log(err);
