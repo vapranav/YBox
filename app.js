@@ -8,7 +8,7 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 const dotenv = require("dotenv");
 dotenv.config();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 console.log(process.env.DB_PASSWORD);
 const mongoose = require("mongoose");
@@ -45,17 +45,17 @@ db.once("open", function () {
 //   }
 // );
 
-Submission.create(
-  {
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Football_iu_1996.jpg/1200px-Football_iu_1996.jpg",
-    author: "611657d635b39f16c017ce39",
-    competition: "6116584858afa508f00a4ed6",
-  },
-  function (err, small) {
-    if (err) return handleError(err);
-  }
-);
+// Submission.create(
+//   {
+//     image:
+//       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Football_iu_1996.jpg/1200px-Football_iu_1996.jpg",
+//     author: "611657d635b39f16c017ce39",
+//     competition: "6116584858afa508f00a4ed6",
+//   },
+//   function (err, small) {
+//     if (err) return handleError(err);
+//   }
+// );
 
 // SubmissionLike.create(
 //   {
